@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Level 6 - smoke-detector-in-room - floor plan</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font: 13px/1.35 Segoe UI, Arial, sans-serif; color: #263238; display: flex; height: 100vh; overflow: hidden; }
+#main { flex: 1; position: relative; min-width: 0; background: #fafafa; }
+#plot { width: 100%; height: 100%; display: block; cursor: grab; user-select: none; }
+#side { width: 380px; border-left: 1px solid #cfd8dc; padding: 10px 12px; overflow-y: auto; background: #fff; }
+h1 { font-size: 16px; margin: 0 0 4px; }
+h1 small { font-weight: normal; color: #546e7a; }
+h2 { font-size: 13px; margin: 12px 0 4px; border-bottom: 1px solid #eceff1; }
+.meta { font-size: 12px; background: #f5f7f8; border: 1px solid #e0e6e9; border-radius: 4px; padding: 6px 8px; }
+.meta div { margin: 2px 0; }
+.scope { font-size: 12px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px; padding: 6px 8px; margin-top: 6px; }
+table.sum { border-collapse: collapse; width: 100%; }
+table.sum td { padding: 1px 4px; border-bottom: 1px solid #f1f3f4; }
+table.sum td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.sw { display: inline-block; width: 11px; height: 11px; border: 1px solid #37474f; vertical-align: -1px; margin-right: 4px; }
+.sw.dot { border-radius: 50%; }
+label.f { display: block; margin: 1px 0; }
+#q { width: 100%; padding: 3px 5px; }
+#tip { position: fixed; display: none; pointer-events: none; background: rgba(38, 50, 56, .95); color: #fff; padding: 6px 8px; border-radius: 4px; max-width: 420px; word-break: break-all; z-index: 9; font-size: 12px; }
+#details { font-size: 12px; word-break: break-all; }
+#details div, #tip div { margin: 1px 0; }
+button { margin-top: 6px; }
+a { color: #1565c0; }
+
+.room { stroke: #37474f; stroke-width: 1px; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
+.cat-green { fill: #4caf50; fill-opacity: .55; }
+.cat-red { fill: #e53935; fill-opacity: .6; }
+.cat-scope { fill: #cfd8dc; fill-opacity: .45; }
+.cat-hatchg { fill: url(#hg); }
+.cat-hatchr { fill: url(#hr); }
+.room.dim { fill-opacity: .1; stroke-opacity: .25; }
+.room.hit { stroke: #000; stroke-width: 2.5px; }
+.lbl { fill: #102027; fill-opacity: 1; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-linejoin: round; }
+.lbl[data-small="1"], .lbl[data-clash="1"], .lbl.dim { display: none; }
+.dev { stroke: #fff; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.dev.cat-blue { fill: #1e88e5; }
+.dev.cat-purple { fill: #8e24aa; }
+.dev.cat-orange { fill: #fb8c00; stroke: #5d4037; }
+.dev.cat-other { fill: #757575; stroke-width: .5px; }
+.sel { stroke: #000 !important; stroke-width: 3px !important; }
+
+.hide-green .cat-green, .hide-hatch .cat-hatchg, .hide-hatch .cat-hatchr, .hide-red .cat-red, .hide-scope .cat-scope,
+.hide-blue .cat-blue, .hide-purple .cat-purple, .hide-orange .cat-orange, .hide-other .cat-other { display: none; }
+</style></head><body>
+<div id="main"><svg id="plot" viewBox="-3 -3 54.49 91.33" preserveAspectRatio="xMidYMid meet"><defs><pattern id="hg" patternUnits="userSpaceOnUse" width="1" height="1" patternTransform="rotate(45)"><rect width="1" height="1" fill="#4caf50" fill-opacity="0.55"/><line x1="0" y1="0" x2="0" y2="1" stroke="#1b5e20" stroke-width="0.1"/></pattern><pattern id="hr" patternUnits="userSpaceOnUse" width="1" height="1" patternTransform="rotate(45)"><rect width="1" height="1" fill="#e53935" fill-opacity="0.55"/><line x1="0" y1="0" x2="0" y2="1" stroke="#7f0000" stroke-width="0.1"/></pattern></defs><g id="rooms"><path class="room cat-red" data-k="c" data-i="0" d="M39.94 3.35 39.43 1.48 44.96 0 48.49 13.2 33.69 17.16 25.15 18.29 16.72 18.29 16.72 4.59 23.94 4.59 31.76 3.56 32.08 4.75 31.6 4.88 31.73 5.36 32.21 5.23 32.26 5.41 39.32 3.51 39.36 3.64 39.82 3.52 39.78 3.39Z"/><path class="room cat-red" data-k="c" data-i="1" d="M5.92 6.86 5.85 6.86 5.85 9.66 10.59 9.66 10.59 6.75 10.8 6.75 10.8 9.88 5.64 9.88 5.64 6.64 5.92 6.64ZM7.46 6.86 7.46 6.64 9.01 6.64 9.01 6.86ZM0.11 14.59 0 14.59 0 28.25 0.11 28.25 0.11 28.51 0 28.51 0 85.33 16.47 85.33 16.47 64.59 16.36 64.59 16.36 64.33 16.47 64.33 16.47 48.51 16.36 48.51 16.36 48.25 16.47 48.25 16.47 34.59 16.36 34.59 16.36 34.33 16.47 34.33 16.47 18.55 16.36 18.55 16.36 18.29 16.72 18.29 16.72 4.59 16.47 4.33 16.47 0.14 0 0.14 0 14.33 0.11 14.33ZM13.33 3.96 3.28 3.96 3.28 0.54 13.33 0.54Z"/></g><g id="labels" font-size="0.8"><text class="lbl" data-i="0" data-c="red" data-n="15" data-p="402.97" data-w="31.77" data-h="18.29" x="32.22" y="10.29"><tspan x="32.22">204</tspan><tspan x="32.22" dy="1.1em">BATTERY STORAGE</tspan></text><text class="lbl" data-i="1" data-c="red" data-n="20" data-p="1369.04" data-w="16.72" data-h="85.2" x="8.23" y="43.73"><tspan x="8.23">205</tspan><tspan x="8.23" dy="1.1em">MECHANICAL PENTHOUSE</tspan></text></g><g id="devices"></g></svg></div>
+<div id="side"><h1>Level 6 <small>(elevation 26 m)</small></h1>
+<div class="meta"><div><b>iModel changeset:</b> 54 (ee20998bc7cb1d72aaa22074b0edb7daa0a357d1)</div><div><b>Exported (UTC):</b> 2026-10-20T09:24:22.620Z</div><div><b>Requirement rule:</b> smoke-detector-in-room (warning): at least 1 &quot;Smoke Detector&quot; in each room. Test table for the evaluation: every room needs a smoke detector (not a real requirement)</div><div><b>Tolerance:</b> 0.15 m (a device is inside a room when its placement point is inside the room solid, within this distance)</div><div><b>Levels:</b> by position (the elevation band of the Z), not the Level parameter</div></div><div class="scope">Findings to review against the requirement table; rooms only; open areas without a room object are not covered.</div>
+<div>Wheel = zoom, drag = pan, hover = details, click = select. <a href="index.html">All levels</a></div>
+<h2>Summary of this level</h2><table class="sum"><tr><td>Room elements</td><td>2</td></tr><tr><td>requirement met</td><td>0</td></tr><tr><td>finding to review (without the required item)</td><td>2</td></tr><tr><td>outside the rule</td><td>0</td></tr><tr><td>in shared-solid groups</td><td>0 (0 groups)</td></tr><tr><td>Smoke Detector inside exactly one room</td><td>0</td></tr><tr><td>Smoke Detector inside several rooms</td><td>0</td></tr><tr><td>Smoke Detector in no room object</td><td>0</td></tr><tr><td>other fire alarm devices</td><td>0</td></tr><tr><td>devices whose Level parameter differs from their position</td><td>0</td></tr></table>
+<h2>Legend (tick to show)</h2>
+<label class="f"><input type="checkbox" data-hide="green" checked> <span class="sw" style="background:#4caf50"></span>Room, requirement met (0)</label>
+<label class="f"><input type="checkbox" data-hide="red" checked> <span class="sw" style="background:#e53935"></span>Room, finding to review (2)</label>
+<label class="f"><input type="checkbox" data-hide="hatch" checked> <span class="sw" style="background:repeating-linear-gradient(45deg,#4caf50,#4caf50 2px,#1b5e20 2px,#1b5e20 3px)"></span>Rooms sharing an identical solid (hatched; green = all met, red = a finding) (0)</label>
+<label class="f"><input type="checkbox" data-hide="scope" checked> <span class="sw" style="background:#cfd8dc"></span>Room outside the rule (name not in scope) (0)</label>
+<label class="f"><input type="checkbox" data-hide="blue" checked> <span class="sw dot" style="background:#1e88e5"></span>Smoke Detector inside one room (0)</label>
+<label class="f"><input type="checkbox" data-hide="purple" checked> <span class="sw dot" style="background:#8e24aa"></span>Smoke Detector inside several rooms (0)</label>
+<label class="f"><input type="checkbox" data-hide="orange" checked> <span class="sw dot" style="background:#fb8c00"></span>Smoke Detector in no room object (0)</label>
+<label class="f"><input type="checkbox" data-hide="other" checked> <span class="sw dot" style="background:#757575"></span>Other fire alarm devices (0)</label>
+<div>0 Room element(s) without usable geometry are not drawn and are on no level.</div>
+<h2>Find a room</h2><input id="q" type="text" placeholder="room name or number"><div id="found"></div>
+<button id="reset" type="button">Reset view</button>
+<h2>Selected</h2><div id="details">Click a room or a device.</div></div>
+<div id="tip"></div>
+<script type="application/json" id="data">{"level":"Level 6","view":[-3,-3,54.49,91.33],"meta":{"family":"Smoke Detector"},"cont":[{"members":[{"id":"0x20000000618","guid":"73977650-22c5-445f-b824-13c3919add22","name":"BATTERY STORAGE","number":"204","area":402.97,"level":"Level 6","status":"finding to review (0 inside, 1 required)","lvl":"Level 6"}],"kind":"single","group":null,"pos":"Level 6","inside":0,"insideIds":[]},{"members":[{"id":"0x20000000619","guid":"f89bb5e9-09e0-4ee1-ae73-8d3317127774","name":"MECHANICAL PENTHOUSE","number":"205","area":1369.04,"level":"Level 6","status":"finding to review (0 inside, 1 required)","lvl":"Level 6"}],"kind":"single","group":null,"pos":"Level 6","inside":0,"insideIds":[]}],"devs":[]}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById("data").textContent);
+  var svg = document.getElementById("plot");
+  var tip = document.getElementById("tip");
+  var panel = document.getElementById("details");
+  var vb = [0, 0, 1, 1];
+  var content = D.view;
+  var hiddenCats = {};
+  var CATKEY = { green: "green", red: "red", hatchg: "hatch", hatchr: "hatch", scope: "scope" };
+
+  var roomEls = [].slice.call(svg.querySelectorAll(".room"));
+  var lblEls = [].slice.call(svg.querySelectorAll(".lbl"));
+  var devEls = [].slice.call(svg.querySelectorAll(".dev"));
+  var lblGroup = svg.querySelector("#labels");
+  var pats = [].slice.call(svg.querySelectorAll("pattern"));
+  lblEls.forEach(function (t) {
+    t._p = parseFloat(t.getAttribute("data-p"));
+    t._x = parseFloat(t.getAttribute("x"));
+    t._y = parseFloat(t.getAttribute("y"));
+    t._n = parseInt(t.getAttribute("data-n"), 10);
+    t._w = parseFloat(t.getAttribute("data-w"));
+    t._h = parseFloat(t.getAttribute("data-h"));
+    t._c = CATKEY[t.getAttribute("data-c")];
+  });
+  var byPriority = lblEls.slice().sort(function (a, b) { return b._p - a._p; });
+
+  function rect() { return svg.getBoundingClientRect(); }
+  function scale() { return rect().width / vb[2]; }
+
+  function fit() {
+    var r = rect();
+    var asp = r.height / r.width;
+    var w = content[2];
+    var h = w * asp;
+    if (h < content[3]) { h = content[3]; w = h / asp; }
+    vb = [content[0] + content[2] / 2 - w / 2, content[1] + content[3] / 2 - h / 2, w, h];
+    apply();
+  }
+
+  // Labels: hidden when their room is small on screen; of two overlapping labels the one of the larger room stays.
+  function declutter(s) {
+    var kept = [];
+    byPriority.forEach(function (t) {
+      var small = t._w * s < 46 || t._h * s < 26;
+      t.setAttribute("data-small", small ? "1" : "0");
+      if (small || t.classList.contains("dim") || hiddenCats[t._c]) { t.setAttribute("data-clash", "0"); return; }
+      var cx = (t._x - vb[0]) * s;
+      var cy = (t._y - vb[1]) * s;
+      var w = t._n * 6.6 + 10;
+      var b = [cx - w / 2, cy - 12, cx + w / 2, cy + 18];
+      var clash = false;
+      for (var i = 0; i < kept.length; i++) {
+        var k = kept[i];
+        if (b[0] < k[2] && b[2] > k[0] && b[1] < k[3] && b[3] > k[1]) { clash = true; break; }
+      }
+      if (!clash) kept.push(b);
+      t.setAttribute("data-clash", clash ? "1" : "0");
+    });
+  }
+
+  var pending = false;
+  function apply() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function () {
+      pending = false;
+      svg.setAttribute("viewBox", vb.join(" "));
+      var s = scale();
+      devEls.forEach(function (c) { c.setAttribute("r", ((c.getAttribute("data-s") === "1" ? 5.5 : 3) / s).toFixed(4)); });
+      lblGroup.setAttribute("font-size", (11 / s).toFixed(4));
+      lblGroup.setAttribute("stroke-width", (3.5 / s).toFixed(4));
+      pats.forEach(function (p) {
+        var n = 8 / s;
+        p.setAttribute("width", n); p.setAttribute("height", n);
+        [].slice.call(p.querySelectorAll("rect")).forEach(function (e) { e.setAttribute("width", n); e.setAttribute("height", n); });
+        [].slice.call(p.querySelectorAll("line")).forEach(function (e) { e.setAttribute("y2", n); e.setAttribute("stroke-width", 1.6 / s); });
+      });
+      declutter(s);
+    });
+  }
+
+  // ---- pan and zoom
+  svg.addEventListener("wheel", function (e) {
+    e.preventDefault();
+    var r = rect();
+    var fx = (e.clientX - r.left) / r.width;
+    var fy = (e.clientY - r.top) / r.height;
+    var wx = vb[0] + fx * vb[2];
+    var wy = vb[1] + fy * vb[3];
+    var f = Math.exp(-e.deltaY * 0.0015);
+    var nw = vb[2] / f;
+    if (nw > content[2] * 6 || nw < 2) return;
+    var nh = vb[3] / f;
+    vb = [wx - fx * nw, wy - fy * nh, nw, nh];
+    apply();
+  }, { passive: false });
+
+  var drag = null;
+  svg.addEventListener("mousedown", function (e) { drag = { x: e.clientX, y: e.clientY, moved: false }; });
+  window.addEventListener("mouseup", function () { setTimeout(function () { drag = null; }, 0); });
+  window.addEventListener("mousemove", function (e) {
+    if (!drag || e.buttons !== 1) return;
+    var dx = e.clientX - drag.x;
+    var dy = e.clientY - drag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+    if (!drag.moved) return;
+    var s = scale();
+    vb[0] -= dx / s; vb[1] -= dy / s;
+    drag.x = e.clientX; drag.y = e.clientY;
+    apply();
+  });
+  window.addEventListener("resize", fit);
+  document.getElementById("reset").addEventListener("click", fit);
+
+  // ---- details (a room outline is one physical room: its Room elements are listed together)
+  function fmt(v) { return v === null || v === undefined ? "" : String(v); }
+  function rows(k, i, compact) {
+    var out = [];
+    if (k === "c") {
+      var c = D.cont[i];
+      if (c.members.length === 1) {
+        var r = c.members[0];
+        out = [["Room", r.number + " " + r.name], ["Status", r.status], ["Area", r.area + " m2"], ["Level (by position)", c.pos], ["Level parameter", r.lvl]];
+        if (!compact) out.push(["ElementId", r.id], ["FederationGuid", r.guid]);
+      } else {
+        out.push(["Shared solid " + c.group, c.members.length + " Room elements, " + c.kind]);
+        out.push(["Level (by position)", c.pos]);
+        c.members.forEach(function (m) {
+          out.push([m.number + " " + m.name, m.status + ", " + m.area + " m2" + (compact ? "" : ", " + m.id + ", " + m.guid)]);
+        });
+      }
+      out.push([D.meta.family + " inside", c.inside]);
+      if (!compact && c.insideIds.length) out.push(["Device ids", c.insideIds.join(", ")]);
+      return out;
+    }
+    var d = D.devs[i];
+    out = [["Device", d.family], ["Status", d.status], ["Level (by position)", d.pos], ["Level parameter", d.lvl + (d.differs ? "  (differs from position)" : "")]];
+    if (!compact) out.push(["ElementId", d.id], ["FederationGuid", d.guid]);
+    out.push(["World X, Y, Z", d.x + ", " + d.y + ", " + d.z]);
+    if (d.tracked) out.push(["Inside rooms", d.rooms.length ? d.rooms.join("; ") : "none (not inside any Room element)"]);
+    return out;
+  }
+  function fill(el, k, i, compact) {
+    el.textContent = "";
+    rows(k, i, compact).forEach(function (p) {
+      var line = document.createElement("div");
+      var b = document.createElement("b");
+      b.textContent = p[0] + ": ";
+      line.appendChild(b);
+      line.appendChild(document.createTextNode(fmt(p[1])));
+      el.appendChild(line);
+    });
+  }
+  function keyOf(t) {
+    var k = t.getAttribute && t.getAttribute("data-k");
+    return k ? { k: k, i: parseInt(t.getAttribute("data-i"), 10) } : null;
+  }
+  svg.addEventListener("mousemove", function (e) {
+    var h = keyOf(e.target);
+    if (!h || (drag && drag.moved)) { tip.style.display = "none"; return; }
+    fill(tip, h.k, h.i, true);
+    tip.style.display = "block";
+    var x = e.clientX + 14;
+    var y = e.clientY + 14;
+    if (x + tip.offsetWidth > window.innerWidth - 4) x = e.clientX - tip.offsetWidth - 14;
+    if (y + tip.offsetHeight > window.innerHeight - 4) y = e.clientY - tip.offsetHeight - 14;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  });
+  svg.addEventListener("mouseleave", function () { tip.style.display = "none"; });
+  var selected = null;
+  svg.addEventListener("click", function (e) {
+    if (drag && drag.moved) return;
+    if (selected) selected.classList.remove("sel");
+    selected = null;
+    var h = keyOf(e.target);
+    if (!h) { panel.textContent = "Click a room or a device."; return; }
+    selected = e.target;
+    selected.classList.add("sel");
+    fill(panel, h.k, h.i, false);
+  });
+
+  // ---- legend (show or hide) and the text filter
+  [].slice.call(document.querySelectorAll("input[data-hide]")).forEach(function (b) {
+    b.addEventListener("change", function () {
+      var key = b.getAttribute("data-hide");
+      svg.classList.toggle("hide-" + key, !b.checked);
+      hiddenCats[key] = !b.checked;
+      apply();
+    });
+  });
+  function matches(c, s) {
+    return c.members.some(function (m) { return (m.name + " " + m.number).toLowerCase().indexOf(s) >= 0; });
+  }
+  var q = document.getElementById("q");
+  var found = document.getElementById("found");
+  q.addEventListener("input", function () {
+    var s = q.value.trim().toLowerCase();
+    var n = 0;
+    roomEls.forEach(function (el) {
+      var m = !s || matches(D.cont[parseInt(el.getAttribute("data-i"), 10)], s);
+      if (m && s) n++;
+      el.classList.toggle("dim", !m);
+      el.classList.toggle("hit", !!s && m);
+    });
+    lblEls.forEach(function (t) {
+      t.classList.toggle("dim", !!s && !matches(D.cont[parseInt(t.getAttribute("data-i"), 10)], s));
+    });
+    found.textContent = s ? n + " room outline(s) match" : "";
+    apply();
+  });
+
+  fit();
+  document.body.setAttribute("data-ready", "1");
+})();
+</script>
+</body></html>
